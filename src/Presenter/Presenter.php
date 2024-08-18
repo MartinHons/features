@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MartinHons\Features\Control;
+namespace MartinHons\Features\Presenter;
 
 use Nette\Application\UI\Presenter as NettePresenter;
 use Nette\DI\Attributes\Inject;

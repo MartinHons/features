@@ -20,6 +20,17 @@ trait TInitAssetTags
         $this->request = $request;
     }
 
+
+    private int $port;
+    /**
+     * @inject
+     */
+    public function setPort(int $port)
+    {
+        $this->port = $port;
+        bdump($this->port);
+    }
+
     public function initAssetTags(): string
     {
         try {
@@ -31,9 +42,9 @@ trait TInitAssetTags
 
         $assetPaths = [];
         $url = '/build/';
-        $devServer = DEBUG_MODE && ($this->request->getCookie('viteDev') === 'true');
+        $devServer = /*DEBUG_MODE &&*/ ($this->request->getCookie('viteDev') === 'true');
         if ($devServer) {
-            $url = 'http://localhost:'.getenv('VITE_PORT').'/';
+            $url = 'http://localhost:'.$this->port.'/';
             $assetPaths[] =  $url.'@vite/client';
         }
 

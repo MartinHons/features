@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace MartinHons\Features\Control;
 
-use Nette\Application\UI\Presenter;
+use Nette\Application\UI\Presenter as NettePresenter;
 use Nette\DI\Attributes\Inject;
 use Nette\Http\Request;
 use Nette\Utils\Strings;
 
-abstract class BasePresenter extends Presenter
+abstract class Presenter extends NettePresenter
 {
     use TInitAssetTags;
 

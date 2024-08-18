@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MartinHons\NextrasUpdater\DI;
 
+use MartinHons\Features\Control\Presenter;
 use Nette\DI\CompilerExtension;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
@@ -26,7 +27,9 @@ class FeaturesExtension extends CompilerExtension
 		$config = $this->getConfig();
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition('entityGenerator')->setFactory(EntityGenerator::class, [$config]);
+        $builder->addDefinition($this->prefix('myService'))
+            ->setFactory(Presenter::class)
+            ->addSetup('setPort', [$config['port']]);
 	}
 
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MartinHons\NextrasUpdater\DI;
+namespace MartinHons\Features\DI;
 
-use MartinHons\Features\Control\Presenter;
+use MartinHons\Features\Presenter\Presenter;
 use Nette\DI\CompilerExtension;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;

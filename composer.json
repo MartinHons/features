@@ -1,0 +1,24 @@
+{
+    "name": "martinhons/features",
+    "version": "1.0.0",
+    "description": "",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "MartinHons\\Features\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Martin Hons",
+            "email": "hons46@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "nette/schema": "^1.3",
+        "nette/application": "^3.2",
+        "tracy/tracy": "^2.10",
+        "nette/di": "^3.2"
+    }
+}

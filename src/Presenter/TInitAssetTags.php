@@ -11,6 +11,7 @@ use Nette\IOException;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
+use RuntimeException;
 use stdClass;
 
 trait TInitAssetTags
@@ -37,6 +38,10 @@ trait TInitAssetTags
 	{
 		try {
 			$manifest = FileSystem::read(sprintf('%s/%s/.vite/manifest.json', $this->config->getWwwDir(), $this->config->getBuildFolder()));
+			$manifest = json_decode($manifest);
+			if (!is_iterable($manifest)) {
+				throw new RuntimeException('The manifest.json file seems corrupted.');
+			}
 		} catch (IOException) {
 			throw new Exception('The manifest.json file was not generated. First run the command: "npm run build".');
 		}
@@ -50,7 +55,7 @@ trait TInitAssetTags
 		}
 
 		$module = $this->getCurrentModule();
-		foreach (json_decode($manifest) as $source) {
+		foreach ($manifest as $source) {
 			if (str_starts_with($source->src, sprintf('%s/%s', $this->config->getModulePath(), $module))) {
 				$assetPaths[] = $this->getAssetPath($source, $url, $devServer);
 			}

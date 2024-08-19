@@ -38,7 +38,7 @@ trait TInitAssetTags
 	{
 		try {
 			$manifest = FileSystem::read(sprintf('%s/%s/.vite/manifest.json', $this->config->getWwwDir(), $this->config->getBuildFolder()));
-			$manifest = json_decode($manifest);
+			$manifest = json_decode($manifest, true);
 			if (!is_iterable($manifest)) {
 				throw new RuntimeException('The manifest.json file seems corrupted.');
 			}
@@ -56,7 +56,7 @@ trait TInitAssetTags
 
 		$module = $this->getCurrentModule();
 		foreach ($manifest as $source) {
-			if (str_starts_with($source->src, sprintf('%s/%s', $this->config->getModulePath(), $module))) {
+			if (str_starts_with($source['src'], sprintf('%s/%s', $this->config->getModulePath(), $module))) {
 				$assetPaths[] = $this->getAssetPath($source, $url, $devServer);
 			}
 		}
@@ -66,12 +66,17 @@ trait TInitAssetTags
 
 
 	/** Returns right path to asset */
-	private function getAssetPath(stdClass $source, string $url, bool $devServer): string
+	/**
+	 * @param array<string|bool> $source
+	 *
+	 * @return string
+	 */
+	private function getAssetPath(array $source, string $url, bool $devServer): string
 	{
 		if ($devServer) {
-			return $url . $source->src;
+			return $url . $source['src'];
 		}
-		return $url . $source->file;
+		return $url . $source['file'];
 	}
 
 

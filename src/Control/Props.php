@@ -22,9 +22,5 @@ abstract class Props
         return $this->data->{$name};
     }
 
-
-    /**
-     * @return Schema[]
-     */
     abstract protected function define(): array;
 }

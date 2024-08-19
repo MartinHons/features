@@ -12,7 +12,6 @@ use Nette\Utils\FileSystem;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
 use RuntimeException;
-use stdClass;
 
 trait TInitAssetTags
 {
@@ -66,6 +65,8 @@ trait TInitAssetTags
 
 
 	/** Returns right path to asset */
+
+
 	/**
 	 * @param array<string|bool> $source
 	 *

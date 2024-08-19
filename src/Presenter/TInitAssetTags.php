@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MartinHons\Features\Presenter;
 
 use Exception;
+use MartinHons\Features\Config\Config;
 use Nette\Http\Request;
 use Nette\IOException;
 use Nette\Utils\FileSystem;
@@ -20,45 +21,42 @@ trait TInitAssetTags
         $this->request = $request;
     }
 
-
-    private int $port;
-    /**
-     * @inject
-     */
-    public function setPort(int $port)
+    private Config $config;
+    public function injectConfig(Config $config): void
     {
-        $this->port = $port;
-        bdump($this->port);
+        $this->config = $config;
     }
 
+    /** Loads asset files from the manifest file and returns them as a string HTML tags */
     public function initAssetTags(): string
     {
         try {
-            $manifest = FileSystem::read('../www/build/.vite/manifest.json');
+            $manifest = FileSystem::read(sprintf('%s/%s/.vite/manifest.json', $this->config->getWwwDir(), $this->config->getBuildFolder()));
         }
         catch(IOException) {
             throw new Exception('The manifest.json file was not generated. First run the command: "npm run build".');
         }
 
         $assetPaths = [];
-        $url = '/build/';
-        $devServer = /*DEBUG_MODE &&*/ ($this->request->getCookie('viteDev') === 'true');
+        $url = '/'.$this->config->getBuildFolder().'/';
+        $devServer = $this->config->getDebugMode() && ($this->request->getCookie('viteDev') === 'true');
         if ($devServer) {
-            $url = 'http://localhost:'.$this->port.'/';
+            $url = '//localhost:'.$this->config->getVitePort().'/';
             $assetPaths[] =  $url.'@vite/client';
         }
 
         $module = $this->getCurrentModule();
         foreach(json_decode($manifest) as $source) {
-            if(str_starts_with($source->src, 'app/Modules/'.$module)) {
-                $assetPaths[] = $this->getSourcePath($source, $url, $devServer);
+            if(str_starts_with($source->src, sprintf('%s/%s', $this->config->getModulePath(), $module))) {
+                $assetPaths[] = $this->getAssetPath($source, $url, $devServer);
             }
         }
 
         return $this->assetTags($assetPaths);
     }
 
-    private function getSourcePath(stdClass $source, string $url, bool $devServer): string
+    /** Returns right path to asset */
+    private function getAssetPath(stdClass $source, string $url, bool $devServer): string
     {
         if ($devServer) {
             return $url . $source->src;
@@ -66,6 +64,7 @@ trait TInitAssetTags
         return $url . $source->file;
     }
 
+    /** Creates HTML tags from the array of assets and returns them as a string */
     private function assetTags(array $assetPaths): string
     {
         $tags = '';

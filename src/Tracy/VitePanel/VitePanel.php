@@ -8,12 +8,12 @@ use Tracy\IBarPanel;
 
 class VitePanel implements IBarPanel
 {
-    public function getTab()
+    public function getTab(): string
     {
         return file_get_contents(__DIR__ . '/VitePanel.html');
     }
 
-    public function getPanel()
+    public function getPanel(): string
     {
         return '';
     }

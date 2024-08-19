@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MartinHons\Features\Presenter;
 
+use MartinHons\Features\DI\FeaturesExtension;
 use Nette\Application\UI\Presenter as NettePresenter;
 use Nette\DI\Attributes\Inject;
 use Nette\Http\Request;

@@ -10,17 +10,20 @@ use stdClass;
 
 abstract class Props
 {
-    private stdClass $data;
+	private stdClass $data;
 
-    public function __construct(array $props) {
 
-        $this->data = (new Processor)->process(Expect::structure($this->define()), $props);
-    }
+	public function __construct(array $props)
+	{
+		$this->data = (new Processor)->process(Expect::structure($this->define()), $props);
+	}
 
-    public function __get(string $name): mixed
-    {
-        return $this->data->{$name};
-    }
 
-    abstract protected function define(): array;
+	public function __get(string $name): mixed
+	{
+		return $this->data->{$name};
+	}
+
+
+	abstract protected function define(): array;
 }

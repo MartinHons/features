@@ -2,8 +2,8 @@ steps:
     - uses: actions/checkout@v2
     - uses: shivammathur/setup-php@v2
       with:
-          php-version: 8.3
+          php-version: 8.2
 
     - run: composer create-project nette/coding-standard temp/coding-standard
-    - run: php temp/coding-standard/ecs src --preset php83
+    - run: php temp/coding-standard/ecs src --preset php82
 

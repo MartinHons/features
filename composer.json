@@ -19,6 +19,15 @@
         "nette/schema": "^1.3",
         "nette/application": "^3.2",
         "tracy/tracy": "^2.10",
-        "nette/di": "^3.2"
+        "nette/di": "^3.2",
+        "phpstan/phpstan": "^1.11",
+        "latte/latte": "^3.0",
+        "contributte/console": "^0.10.1",
+        "netlte/coding-standard": "^1.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

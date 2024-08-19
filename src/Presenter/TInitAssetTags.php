@@ -70,7 +70,10 @@ trait TInitAssetTags
 	}
 
 
-	/** Creates HTML tags from the array of assets and returns them as a string */
+	/**
+	 * Creates HTML tags from the array of assets and returns them as a string
+	 * @param array<string> $assetPaths
+	 */
 	private function assetTags(array $assetPaths): string
 	{
 		$tags = '';

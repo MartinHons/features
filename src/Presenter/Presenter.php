@@ -6,6 +6,7 @@ namespace MartinHons\Features\Presenter;
 
 use Nette\Application\UI\Presenter as NettePresenter;
 use Nette\Utils\Strings;
+use RuntimeException;
 
 abstract class Presenter extends NettePresenter
 {
@@ -23,6 +24,10 @@ abstract class Presenter extends NettePresenter
 	/** Returns name of current module */
 	public function getCurrentModule(): string
 	{
-		return Strings::before($this->getName(), ':') . 'Module';
+		$moduleName = $this->getName();
+		if ($moduleName === null) {
+			throw new RuntimeException('Error reading current module name');
+		}
+		return Strings::before($moduleName, ':') . 'Module';
 	}
 }

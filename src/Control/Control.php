@@ -11,10 +11,16 @@ abstract class Control extends NetteControl
 	protected Props $props;
 
 
+	/**
+	 * @param array<mixed> $props
+	 */
 	public function setProps(array $props): void
 	{
-		$this->props = new ($this->getPropsClass())($props);
-		$this->template->props = $this->props;
+		$propsObj = new ($this->getPropsClass())($props);
+		if ($propsObj instanceof Props) {
+			$this->props = $propsObj;
+			$this->template->props = $this->props;
+		}
 	}
 
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Tracy\VitePanel;
+namespace MartinHons\Features\Tracy\VitePanel;
 
 use RuntimeException;
 use Tracy\IBarPanel;

@@ -1,9 +1,17 @@
-steps:
-    - uses: actions/checkout@v2
-    - uses: shivammathur/setup-php@v2
-      with:
+name: coding_standards
+run-name: Check coding standards
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
           php-version: 8.2
-
-    - run: composer create-project nette/coding-standard temp/coding-standard
-    - run: php temp/coding-standard/ecs src --preset php82
-
+      - run: composer create-project nette/coding-standard temp/coding-standard
+      - run: php temp/coding-standard/ecs src --preset php82
